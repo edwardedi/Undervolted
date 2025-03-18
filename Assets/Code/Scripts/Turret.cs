@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEditor;
 
 public class Turret : MonoBehaviour
@@ -8,14 +9,29 @@ public class Turret : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject upgradeUI;
+    [SerializeField] private Button upgradeButton;
+
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 3f;
     [SerializeField] private float rotationSpeed = 300f;
     [SerializeField] private float bps = 2f;
+    [SerializeField] private int baseUpgradeCost = 100;
 
     private Transform target;
     private float timeUntilFire;
+    private int level = 1;
+    private float bpsBase;
+    private float targetingRangeBase;
+
+    private void Start()
+    {
+        bpsBase = bps;
+        targetingRangeBase = targetingRange;
+
+        upgradeButton.onClick.AddListener(Upgrade);
+    }
 
     private void Update()
     {
@@ -71,6 +87,44 @@ public class Turret : MonoBehaviour
     private bool CheckTargetIsInRange()
     {
         return Vector2.Distance(target.position, transform.position) <= targetingRange;
+    }
+
+    public void openUpgradeUI()
+    {
+        upgradeUI.SetActive(true);
+    }
+
+    public void CloseUpgradeUI()
+    {
+        upgradeUI.SetActive(false);
+        UIManager.main.SetHoveringState(false);
+    }
+
+    private void Upgrade()
+    {
+        if (CalculateCost() > LevelManager.main.currency) return;
+
+        LevelManager.main.SpendCurrency(CalculateCost());
+        level++;
+        bps = CalculateBps();
+        targetingRange = CalculateRange();
+
+        CloseUpgradeUI();
+    }
+
+    private int CalculateCost()
+    {
+        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+    }
+
+    private float CalculateBps()
+    {
+        return bpsBase * Mathf.Pow(level, 0.5f);
+    }
+
+    private float CalculateRange()
+    {
+        return targetingRangeBase * Mathf.Pow(level, 0.2f);
     }
 
     private void OnDrawGizmosSelected()

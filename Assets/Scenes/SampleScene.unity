@@ -2496,6 +2496,7 @@ GameObject:
   - component: {fileID: 511042595}
   - component: {fileID: 511042597}
   - component: {fileID: 511042598}
+  - component: {fileID: 511042599}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -2584,6 +2585,18 @@ MonoBehaviour:
   - name: Slowmo Turret
     cost: 10
     prefab: {fileID: 3107923724768569496, guid: 5e2f2ca84d73cd34f8e0e21e03d5547d, type: 3}
+--- !u!114 &511042599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 511042594}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6365e2ea6d08db440bfa61d8db772585, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2820,7 +2833,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 000000007fb760a9
+  m_ApplyToSortingLayers: 000000007fb760a963f174f2
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
