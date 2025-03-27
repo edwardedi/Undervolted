@@ -68,11 +68,28 @@ public class Turret : MonoBehaviour
 
     private void FindTarget()
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+        RaycastHit2D[] enemies = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
         
-        if(hits.Length > 0)
+        float maxDistance = float.MaxValue;
+        if(enemies.Length > 0)
         {
-            target = hits[0].transform;
+            /*foreach (RaycastHit2D enemy in enemies)
+            {
+                EnemyMovement em = enemy.transform.GetComponent<EnemyMovement>();
+                if (em.DistanceToFinish() > maxDistance)
+                {
+                    maxDistance = em.DistanceToFinish();
+                }
+            }
+            foreach (var enemy in enemies)
+            {
+                EnemyMovement em = enemy.transform.GetComponent<EnemyMovement>();
+                if (em.DistanceToFinish() - maxDistance < 0.00001)
+                {
+                    target = enemy.transform;
+                }
+            }*/
+            target = enemies[0].transform;
         }
     }
 

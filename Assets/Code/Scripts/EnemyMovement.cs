@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
 
     private Transform target;
-    private int pathIndex = 0;
+    public int pathIndex = 0;
     private float baseSpeed;
 
     void Start()
@@ -57,5 +57,15 @@ public class EnemyMovement : MonoBehaviour
     public void ResetSpeed()
     {
         moveSpeed = baseSpeed;
+    }
+
+    public float DistanceToFinish()
+    {
+        float totalDistance = Vector2.Distance(LevelManager.main.path[pathIndex].position, transform.position);
+        for (int i = pathIndex + 1; i < LevelManager.main.path.Length; i++)
+        {
+            totalDistance += Vector2.Distance(LevelManager.main.path[i - 1].position, LevelManager.main.path[i].position);
+        }
+        return totalDistance;
     }
 }

@@ -3506,6 +3506,7 @@ MonoBehaviour:
   enemyPrefabs:
   - {fileID: 4981700671887410351, guid: e04dab9470166be42aab25d05bda7ee2, type: 3}
   - {fileID: 4981700671887410351, guid: 92256305ff8172641a3249ae7ed7a199, type: 3}
+  nextLevelButton: {fileID: 62158408}
   baseEnemies: 8
   enemiesPerSecond: 0.5
   timeBetweenWaves: 1

@@ -1,12 +1,12 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Button nextLevelButton;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
@@ -32,15 +32,15 @@ public class EnemySpawner : MonoBehaviour
         return currentWave;
     }
 
+    private void Start()
+    {
+        nextLevelButton.onClick.AddListener(StartWave);
+    }
+
     private void Awake()
     {
         main = this;
         onEnemyDestroy.AddListener(EnemyDestroyed);
-    }
-
-    private void Start()
-    {
-        StartCoroutine(StartWave());
     }
 
     private void Update()
@@ -69,9 +69,10 @@ public class EnemySpawner : MonoBehaviour
         enemiesAlive--;
     }
 
-    private IEnumerator StartWave()
+    private void StartWave()
     {
-        yield return new WaitForSeconds(timeBetweenWaves);
+        if (isSpawning)
+            return;
         isSpawning = true;
         enemiesLeftToSpawn = EnemiesPerWave();
         eps = EnemiesPerSecond();
@@ -82,7 +83,6 @@ public class EnemySpawner : MonoBehaviour
         currentWave++;
         isSpawning = false;
         timeSinceLastSpawn = 0f;
-        StartCoroutine(StartWave());
     }
 
     private void SpawnEnemy()
