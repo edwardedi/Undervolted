@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 2942826144430101584}
   - component: {fileID: 2641865549319850629}
   m_Layer: 0
-  m_Name: Test Turret
+  m_Name: Super Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -202,7 +202,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 545874308705812191}
@@ -227,9 +227,12 @@ MonoBehaviour:
     m_Bits: 64
   bulletPrefab: {fileID: 9050469705887070267, guid: 5c11388a3ca467942884a12d9b966934, type: 3}
   firingPoint: {fileID: 6831289228325641449}
+  upgradeUI: {fileID: 0}
+  upgradeButton: {fileID: 0}
   targetingRange: 5
   rotationSpeed: 200
   bps: 2
+  baseUpgradeCost: 100
 --- !u!1 &7429972312642243375
 GameObject:
   m_ObjectHideFlags: 0
