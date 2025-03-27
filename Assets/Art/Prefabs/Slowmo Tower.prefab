@@ -104,5 +104,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetingRange: 3
-  aps: 0.25
+  aps: 10
   freezeTime: 1

@@ -37,6 +37,8 @@ public class Plot : MonoBehaviour
 
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
 
+        if (towerToBuild == null) return;
+
         if(towerToBuild.cost > LevelManager.main.currency)
         {
             //message you can't afford
@@ -46,5 +48,6 @@ public class Plot : MonoBehaviour
         LevelManager.main.SpendCurrency(towerToBuild.cost);
         towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
+        BuildManager.main.SetSelectedTower(-1);
     }
 }

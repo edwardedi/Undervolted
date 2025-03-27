@@ -11,6 +11,13 @@ public class Bullet : MonoBehaviour
 
     private Transform target;
 
+    private void Update()
+    {
+        Vector2 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        if (screenPosition.y > Screen.height || screenPosition.x > Screen.width || screenPosition.y < 0 || screenPosition.x < 0)
+            Destroy(gameObject);
+    }
+
     public void SetTarget(Transform _target)
     {
         target = _target;

@@ -10,10 +10,11 @@ public class TurretSlowmo : MonoBehaviour
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 3f;
-    [SerializeField] private float aps = 0.25f; //attack per second
+    [SerializeField] private float aps = 10f; //attack per second
     [SerializeField] private float freezeTime = 1f;
 
     private float timeUntilFire;
+    private float turretLevel = 1;
 
     private void Update()
     {
@@ -36,7 +37,7 @@ public class TurretSlowmo : MonoBehaviour
             {
                 RaycastHit2D hit = hits[i];
                 EnemyMovement em = hit.transform.GetComponent<EnemyMovement>();
-                em.UpdateSpeed(0.5f);
+                em.UpdateSpeed(em.GetBaseSpeed()/(turretLevel+1));
 
                 StartCoroutine(ResetEnemySpeed(em));
             }

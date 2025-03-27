@@ -18,6 +18,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
+    public static EnemySpawner main;
+
     private int currentWave = 1;
     private float timeSinceLastSpawn;
     private int enemiesAlive;
@@ -25,8 +27,14 @@ public class EnemySpawner : MonoBehaviour
     private float eps; //enemies per second
     private bool isSpawning = false;
 
+    public int GetCurrentWave()
+    {
+        return currentWave;
+    }
+
     private void Awake()
     {
+        main = this;
         onEnemyDestroy.AddListener(EnemyDestroyed);
     }
 

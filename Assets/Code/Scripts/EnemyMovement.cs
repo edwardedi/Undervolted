@@ -44,6 +44,11 @@ public class EnemyMovement : MonoBehaviour
         rb.linearVelocity = direction * moveSpeed;
     }
 
+    public float GetBaseSpeed()
+    {
+        return baseSpeed;
+    }
+
     public void UpdateSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;
