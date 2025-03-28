@@ -9,7 +9,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
 
     private Transform target;
-    public int pathIndex = 0;
+    private int pathIndex = 0;
     private float baseSpeed;
 
     void Start()
