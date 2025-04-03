@@ -15,9 +15,11 @@ public class TurretSlowmo : MonoBehaviour
 
     private float timeUntilFire;
     private float turretLevel = 1;
+    private bool isGridConnected;
 
     private void Update()
     {
+        if (isGridConnected == false) return;
         timeUntilFire += Time.deltaTime;
 
         if (timeUntilFire >= 1f / aps)
@@ -26,18 +28,18 @@ public class TurretSlowmo : MonoBehaviour
             timeUntilFire = 0f;
         }
     }
-    
+
     private void FreezeEnemies()
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
 
-        if(hits.Length > 0)
+        if (hits.Length > 0)
         {
-            for(int i = 0; i < hits.Length; i++)
+            for (int i = 0; i < hits.Length; i++)
             {
                 RaycastHit2D hit = hits[i];
                 EnemyMovement em = hit.transform.GetComponent<EnemyMovement>();
-                em.UpdateSpeed(em.GetBaseSpeed()/(turretLevel+1));
+                em.UpdateSpeed(em.GetBaseSpeed() / (turretLevel + 1));
 
                 StartCoroutine(ResetEnemySpeed(em));
             }
@@ -49,6 +51,11 @@ public class TurretSlowmo : MonoBehaviour
         yield return new WaitForSeconds(freezeTime);
 
         em.ResetSpeed();
+    }
+
+    public void SetGridConnectivity(bool isConnected)
+    {
+        isGridConnected = isConnected;
     }
 
     private void OnDrawGizmosSelected()

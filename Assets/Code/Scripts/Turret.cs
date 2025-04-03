@@ -18,12 +18,14 @@ public class Turret : MonoBehaviour
     [SerializeField] private float rotationSpeed = 300f;
     [SerializeField] private float bps = 2f;
     [SerializeField] private int baseUpgradeCost = 100;
+    [SerializeField] private int electricityCost = 5;
 
     private Transform target;
     private float timeUntilFire;
     private int level = 1;
     private float bpsBase;
     private float targetingRangeBase;
+    private bool isGridConnected;
 
     private void Start()
     {
@@ -35,7 +37,9 @@ public class Turret : MonoBehaviour
 
     private void Update()
     {
-        if(target == null)
+        if (isGridConnected == false) return;
+        if (LevelManager.main.CheckElectricity(electricityCost) == false) return;
+        if (target == null)
         {
             FindTarget();
             return;
@@ -43,18 +47,21 @@ public class Turret : MonoBehaviour
 
         RotateTowardsTarget();
 
-        if(!CheckTargetIsInRange())
+        if (!CheckTargetIsInRange())
         {
             target = null;
-        } 
+        }
         else
         {
             timeUntilFire += Time.deltaTime;
 
-            if(timeUntilFire >= 1f / bps)
+            if (timeUntilFire >= 1f / bps)
             {
-                Shoot();
-                timeUntilFire = 0f;
+                if (LevelManager.main.ConsumeElectricity(electricityCost) == true)
+                {
+                    Shoot();
+                    timeUntilFire = 0f;
+                }
             }
         }
     }
@@ -69,9 +76,9 @@ public class Turret : MonoBehaviour
     private void FindTarget()
     {
         RaycastHit2D[] enemies = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
-        
+
         float maxDistance = float.MaxValue;
-        if(enemies.Length > 0)
+        if (enemies.Length > 0)
         {
             /*foreach (RaycastHit2D enemy in enemies)
             {
@@ -142,6 +149,11 @@ public class Turret : MonoBehaviour
     private float CalculateRange()
     {
         return targetingRangeBase * Mathf.Pow(level, 0.2f);
+    }
+
+    public void SetGridConnectivity(bool isConnected)
+    {
+        isGridConnected = isConnected;
     }
 
     private void OnDrawGizmosSelected()

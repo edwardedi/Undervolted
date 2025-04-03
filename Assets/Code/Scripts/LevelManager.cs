@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     public Transform[] path;
 
     public int currency;
+    public int electricity;
 
     private void Awake()
     {
@@ -16,7 +17,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100;
+        currency = 1000;
+        electricity = 100;
     }
 
     public void IncreaseCurrency(int amount)
@@ -26,7 +28,7 @@ public class LevelManager : MonoBehaviour
 
     public bool SpendCurrency(int amount)
     {
-        if(amount <= currency)
+        if (amount <= currency)
         {
             currency -= amount;
             return true;
@@ -36,4 +38,35 @@ public class LevelManager : MonoBehaviour
             return false;
         }
     }
+
+    public void GenerateElectricity(int amount)
+    {
+        electricity += amount;
+    }
+
+    public bool ConsumeElectricity(int amount)
+    {
+        if (amount <= electricity)
+        {
+            electricity -= amount;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckElectricity(int amount)
+    {
+        if (amount <= electricity)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

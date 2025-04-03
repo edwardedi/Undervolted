@@ -101,4 +101,9 @@ public class EnemySpawner : MonoBehaviour
     {
         return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor),0f, enemiesPerSecondCap);
     }
+
+    public bool IsLevelActive()
+    {
+        return isSpawning;
+    }
 }
