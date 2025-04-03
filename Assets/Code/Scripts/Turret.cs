@@ -1,6 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEditor;
+using System;
 
 public class Turret : MonoBehaviour
 {
@@ -16,20 +18,22 @@ public class Turret : MonoBehaviour
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 3f;
     [SerializeField] private float rotationSpeed = 300f;
-    [SerializeField] private float bps = 2f;
+    [SerializeField] private float aps = 2f;
     [SerializeField] private int baseUpgradeCost = 100;
     [SerializeField] private int electricityCost = 5;
+    [SerializeField] private float freezeTime = 1f;
 
     private Transform target;
     private float timeUntilFire;
     private int level = 1;
-    private float bpsBase;
+    private float apsBase;
     private float targetingRangeBase;
     private bool isGridConnected;
+    private int typeOfTurret;
 
     private void Start()
     {
-        bpsBase = bps;
+        apsBase = aps;
         targetingRangeBase = targetingRange;
 
         upgradeButton.onClick.AddListener(Upgrade);
@@ -39,6 +43,19 @@ public class Turret : MonoBehaviour
     {
         if (isGridConnected == false) return;
         if (LevelManager.main.CheckElectricity(electricityCost) == false) return;
+
+        if (typeOfTurret == 2)
+        {
+            timeUntilFire += Time.deltaTime;
+
+            if (timeUntilFire >= 1f / aps)
+            {
+                FreezeEnemies();
+                timeUntilFire = 0f;
+            }
+            return;
+        }
+
         if (target == null)
         {
             FindTarget();
@@ -55,7 +72,7 @@ public class Turret : MonoBehaviour
         {
             timeUntilFire += Time.deltaTime;
 
-            if (timeUntilFire >= 1f / bps)
+            if (timeUntilFire >= 1f / aps)
             {
                 if (LevelManager.main.ConsumeElectricity(electricityCost) == true)
                 {
@@ -63,6 +80,23 @@ public class Turret : MonoBehaviour
                     timeUntilFire = 0f;
                 }
             }
+        }
+    }
+
+    public void setTypeOfTurret(int type)
+    {
+        switch (type)
+        {
+            case 0:
+                typeOfTurret = 0; break;
+            case 1:
+                typeOfTurret = 1; break;
+            case 2:
+                typeOfTurret = 2; break;
+            case 3:
+                typeOfTurret = 3; break;
+            case 4:
+                typeOfTurret = 4; break;
         }
     }
 
@@ -130,7 +164,7 @@ public class Turret : MonoBehaviour
 
         LevelManager.main.SpendCurrency(CalculateCost());
         level++;
-        bps = CalculateBps();
+        aps = Calculateaps();
         targetingRange = CalculateRange();
 
         CloseUpgradeUI();
@@ -141,14 +175,41 @@ public class Turret : MonoBehaviour
         return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
     }
 
-    private float CalculateBps()
+    private float Calculateaps()
     {
-        return bpsBase * Mathf.Pow(level, 0.5f);
+        return apsBase * Mathf.Pow(level, 0.5f);
     }
 
     private float CalculateRange()
     {
         return targetingRangeBase * Mathf.Pow(level, 0.2f);
+    }
+
+    private void FreezeEnemies()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
+
+        if (hits.Length > 0)
+        {
+            if (LevelManager.main.ConsumeElectricity(electricityCost) == true)
+            {
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    RaycastHit2D hit = hits[i];
+                    EnemyMovement em = hit.transform.GetComponent<EnemyMovement>();
+                    em.UpdateSpeed(em.GetBaseSpeed() / (level + 1));
+
+                    StartCoroutine(ResetEnemySpeed(em));
+                }
+            }
+        }
+    }
+
+    private IEnumerator ResetEnemySpeed(EnemyMovement em)
+    {
+        yield return new WaitForSeconds(freezeTime);
+
+        em.ResetSpeed();
     }
 
     public void SetGridConnectivity(bool isConnected)

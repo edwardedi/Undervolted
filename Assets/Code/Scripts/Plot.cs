@@ -11,7 +11,6 @@ public class Plot : MonoBehaviour
     private GameObject towerObj;
     private GameObject gridObj;
     public Turret turret;
-    public TurretSlowmo turretSlowmo;
     private Color startColor;
 
     private void Start()
@@ -41,8 +40,6 @@ public class Plot : MonoBehaviour
             gridObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
             turret = towerObj.GetComponent<Turret>();
             turret.SetGridConnectivity(true);
-            turretSlowmo = towerObj.GetComponent<TurretSlowmo>();
-            turretSlowmo.SetGridConnectivity(true);
             BuildManager.main.SetSelectedTower(-1);
             return;
         }
@@ -66,6 +63,7 @@ public class Plot : MonoBehaviour
             LevelManager.main.SpendCurrency(towerToBuild.cost);
             towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
             turret = towerObj.GetComponent<Turret>();
+            turret.setTypeOfTurret(BuildManager.main.GetTowerNumber());
             BuildManager.main.SetSelectedTower(-1);
         }
     }

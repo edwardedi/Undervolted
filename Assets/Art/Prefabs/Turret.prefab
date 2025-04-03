@@ -605,8 +605,10 @@ MonoBehaviour:
   upgradeButton: {fileID: 3841361246517281522}
   targetingRange: 3
   rotationSpeed: 300
-  bps: 2
+  aps: 2
   baseUpgradeCost: 100
+  electricityCost: 5
+  freezeTime: 0
 --- !u!1 &6854340650006173225
 GameObject:
   m_ObjectHideFlags: 0
