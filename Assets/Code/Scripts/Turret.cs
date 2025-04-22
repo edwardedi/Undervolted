@@ -97,6 +97,10 @@ public class Turret : MonoBehaviour
                 typeOfTurret = 3; break;
             case 4:
                 typeOfTurret = 4; break;
+            case 5:
+                typeOfTurret = 5; break;
+            case 6:
+                typeOfTurret = 6; break;
         }
     }
 
@@ -111,7 +115,7 @@ public class Turret : MonoBehaviour
     {
         RaycastHit2D[] enemies = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
 
-        float maxDistance = float.MaxValue;
+        //float maxDistance = float.MaxValue;
         if (enemies.Length > 0)
         {
             /*foreach (RaycastHit2D enemy in enemies)
@@ -155,7 +159,7 @@ public class Turret : MonoBehaviour
     public void CloseUpgradeUI()
     {
         upgradeUI.SetActive(false);
-        UIManager.main.SetHoveringState(false);
+        //UIManager.main.SetHoveringState(false);
     }
 
     private void Upgrade()
@@ -167,7 +171,7 @@ public class Turret : MonoBehaviour
         aps = Calculateaps();
         targetingRange = CalculateRange();
 
-        CloseUpgradeUI();
+        //CloseUpgradeUI();
     }
 
     private int CalculateCost()
