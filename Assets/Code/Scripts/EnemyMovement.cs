@@ -9,8 +9,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
 
     private Transform target;
-    private int pathIndex = 0;
+    public int pathIndex = 0;
     private float baseSpeed;
+    public int numberOfEntryPoints = 1;
 
     void Start()
     {
@@ -20,21 +21,42 @@ public class EnemyMovement : MonoBehaviour
 
     void Update()
     {
-        if(Vector2.Distance(target.position, transform.position) <= 0.1f)
+        if (numberOfEntryPoints == 1)
         {
-            pathIndex++;
+            if (Vector2.Distance(target.position, transform.position) <= 0.1f)
+            {
+                pathIndex++;
 
-            if(pathIndex >= LevelManager.main.path.Length)
+                if (pathIndex >= LevelManager.main.path.Length)
+                {
+                    EnemySpawner.onEnemyDestroy.Invoke();
+                    Destroy(gameObject);
+                    return;
+                }
+                else
+                {
+                    target = LevelManager.main.path[pathIndex];
+                }
+            }
+        } else if (numberOfEntryPoints == 2)
+        {
+            if (Vector2.Distance(target.position, transform.position) <= 0.1f)
             {
-                EnemySpawner.onEnemyDestroy.Invoke();
-                Destroy(gameObject);
-                return;
-            } 
-            else
-            {
-                target = LevelManager.main.path[pathIndex];
+                pathIndex += 2;
+
+                if (pathIndex >= LevelManager.main.path.Length)
+                {
+                    EnemySpawner.onEnemyDestroy.Invoke();
+                    Destroy(gameObject);
+                    return;
+                }
+                else
+                {
+                    target = LevelManager.main.path[pathIndex];
+                }
             }
         }
+        
     }
 
     private void FixedUpdate()

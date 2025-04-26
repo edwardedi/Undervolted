@@ -89,10 +89,23 @@ public class EnemySpawner : MonoBehaviour
     {
         int index = Random.Range(0, enemyPrefabs.Length);
         GameObject prefabToSpawn = enemyPrefabs[index];
-        Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+        GameObject enemy1 = Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+        EnemyMovement enemyMovement1 = enemy1.GetComponent<EnemyMovement>();
+        if (enemyMovement1 != null)
+        {
+            enemyMovement1.pathIndex = 0;
+        }
+
         if (LevelManager.main.secondStartPoint != null)
         {
-            Instantiate(prefabToSpawn, LevelManager.main.secondStartPoint.position, Quaternion.identity);
+            GameObject enemy2 = Instantiate(prefabToSpawn, LevelManager.main.secondStartPoint.position, Quaternion.identity);
+            EnemyMovement enemyMovement2 = enemy2.GetComponent<EnemyMovement>();
+            if (enemyMovement2 != null)
+            {
+                enemyMovement2.pathIndex = 1;
+                enemyMovement1.numberOfEntryPoints = 2;
+                enemyMovement2.numberOfEntryPoints = 2;
+            }
             return 2;
         }
         return 1;
@@ -100,7 +113,10 @@ public class EnemySpawner : MonoBehaviour
 
     private int EnemiesPerWave()
     {
-        return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
+        int result = Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
+        if (result % 2 == 1)
+            return result + 1;
+        return result;
     }
 
     private float EnemiesPerSecond()
