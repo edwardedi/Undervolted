@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
     private int enemiesLeftToSpawn;
     private float eps; //enemies per second
     private bool isSpawning = false;
+    private int numberOfSpawnedEnemies;
 
     public int GetCurrentWave()
     {
@@ -51,9 +52,9 @@ public class EnemySpawner : MonoBehaviour
 
         if(timeSinceLastSpawn >= (1f / eps) && enemiesLeftToSpawn > 0)
         {
-            SpawnEnemy();
-            enemiesLeftToSpawn--;
-            enemiesAlive++;
+            numberOfSpawnedEnemies = SpawnEnemy();
+            enemiesLeftToSpawn -= numberOfSpawnedEnemies;
+            enemiesAlive += numberOfSpawnedEnemies;
             timeSinceLastSpawn = 0f;
         }
 
@@ -84,11 +85,17 @@ public class EnemySpawner : MonoBehaviour
         timeSinceLastSpawn = 0f;
     }
 
-    private void SpawnEnemy()
+    private int SpawnEnemy()
     {
         int index = Random.Range(0, enemyPrefabs.Length);
         GameObject prefabToSpawn = enemyPrefabs[index];
         Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+        if (LevelManager.main.secondStartPoint != null)
+        {
+            Instantiate(prefabToSpawn, LevelManager.main.secondStartPoint.position, Quaternion.identity);
+            return 2;
+        }
+        return 1;
     }
 
     private int EnemiesPerWave()
