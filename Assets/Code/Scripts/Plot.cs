@@ -40,6 +40,7 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("Show upgrade UI");
                 turret.openUpgradeUI();
+                FindFirstObjectByType<TurretUpgradeUI>().SetTarget(turret);
                 return;
             }
         }
@@ -49,6 +50,7 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("Show upgrade UI");
                 turret.openUpgradeUI();
+                FindFirstObjectByType<TurretUpgradeUI>().SetTarget(turret);
                 return;
             }
         }

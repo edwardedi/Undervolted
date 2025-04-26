@@ -11,9 +11,9 @@ public class Turret : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
-    [SerializeField] private GameObject upgradeUI;
-    [SerializeField] private Button upgradeAPS;
-    [SerializeField] private Button upgradeRange;
+    //[SerializeField] private GameObject upgradeUI;
+    //[SerializeField] private Button upgradeAPS;
+    //[SerializeField] private Button upgradeRange;
 
 
     [Header("Attribute")]
@@ -38,8 +38,8 @@ public class Turret : MonoBehaviour
         apsBase = aps;
         targetingRangeBase = targetingRange;
 
-        upgradeAPS.onClick.AddListener(UpgradeAPS);
-        upgradeRange.onClick.AddListener(UpgradeRange);
+        //upgradeAPS.onClick.AddListener(UpgradeAPS);
+        //upgradeRange.onClick.AddListener(UpgradeRange);
     }
 
     private void Update()
@@ -156,17 +156,18 @@ public class Turret : MonoBehaviour
 
     public void openUpgradeUI()
     {
-        upgradeUI.SetActive(true);
+        //upgradeUI.SetActive(true);
     }
 
     public void CloseUpgradeUI()
     {
-        upgradeUI.SetActive(false);
+        //upgradeUI.SetActive(false);
         //UIManager.main.SetHoveringState(false);
     }
 
-    private void UpgradeAPS()
+    public void UpgradeAPS()
     {
+        Debug.Log("Upgrade Speed turret");
         if (CalculateCost(levelAPS) > LevelManager.main.currency) return;
 
         LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
@@ -176,8 +177,9 @@ public class Turret : MonoBehaviour
         //CloseUpgradeUI();
     }
 
-    private void UpgradeRange()
+    public void UpgradeRange()
     {
+        Debug.Log("Upgrade Range turret");
         if (CalculateCost(levelRange) > LevelManager.main.currency) return;
 
         LevelManager.main.SpendCurrency(CalculateCost(levelRange));
