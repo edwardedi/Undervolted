@@ -958,7 +958,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 9050469705887070267, guid: 5c11388a3ca467942884a12d9b966934, type: 3}
   firingPoint: {fileID: 6831289228325641449}
   upgradeUI: {fileID: 6909020430277333749}
-  upgradeButton: {fileID: 3993857260522781389}
+  upgradeAPS: {fileID: 3993857260522781389}
+  upgradeRange: {fileID: 8242727459267966955}
   targetingRange: 3
   rotationSpeed: 300
   aps: 2

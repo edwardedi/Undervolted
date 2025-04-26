@@ -12,7 +12,8 @@ public class Turret : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
     [SerializeField] private GameObject upgradeUI;
-    [SerializeField] private Button upgradeButton;
+    [SerializeField] private Button upgradeAPS;
+    [SerializeField] private Button upgradeRange;
 
 
     [Header("Attribute")]
@@ -25,7 +26,8 @@ public class Turret : MonoBehaviour
 
     private Transform target;
     private float timeUntilFire;
-    private int level = 1;
+    private int levelAPS = 1;
+    private int levelRange = 1;
     private float apsBase;
     private float targetingRangeBase;
     private bool isGridConnected;
@@ -36,7 +38,8 @@ public class Turret : MonoBehaviour
         apsBase = aps;
         targetingRangeBase = targetingRange;
 
-        upgradeButton.onClick.AddListener(Upgrade);
+        upgradeAPS.onClick.AddListener(UpgradeAPS);
+        upgradeRange.onClick.AddListener(UpgradeRange);
     }
 
     private void Update()
@@ -162,31 +165,41 @@ public class Turret : MonoBehaviour
         //UIManager.main.SetHoveringState(false);
     }
 
-    private void Upgrade()
+    private void UpgradeAPS()
     {
-        if (CalculateCost() > LevelManager.main.currency) return;
+        if (CalculateCost(levelAPS) > LevelManager.main.currency) return;
 
-        LevelManager.main.SpendCurrency(CalculateCost());
-        level++;
+        LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
+        levelAPS++;
         aps = Calculateaps();
+
+        //CloseUpgradeUI();
+    }
+
+    private void UpgradeRange()
+    {
+        if (CalculateCost(levelRange) > LevelManager.main.currency) return;
+
+        LevelManager.main.SpendCurrency(CalculateCost(levelRange));
+        levelRange++;
         targetingRange = CalculateRange();
 
         //CloseUpgradeUI();
     }
 
-    private int CalculateCost()
+    private int CalculateCost(int level)
     {
-        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
+        return baseUpgradeCost + (level - 1) * 50;
     }
 
     private float Calculateaps()
     {
-        return apsBase * Mathf.Pow(level, 0.5f);
+        return apsBase + levelAPS - 1;
     }
 
     private float CalculateRange()
     {
-        return targetingRangeBase * Mathf.Pow(level, 0.2f);
+        return targetingRangeBase + levelRange - 1;
     }
 
     private void FreezeEnemies()
@@ -201,7 +214,7 @@ public class Turret : MonoBehaviour
                 {
                     RaycastHit2D hit = hits[i];
                     EnemyMovement em = hit.transform.GetComponent<EnemyMovement>();
-                    em.UpdateSpeed(em.GetBaseSpeed() / (level + 1));
+                    em.UpdateSpeed(em.GetBaseSpeed() / (levelAPS + 1));
 
                     StartCoroutine(ResetEnemySpeed(em));
                 }
