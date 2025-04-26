@@ -26,8 +26,8 @@ public class Turret : MonoBehaviour
 
     private Transform target;
     private float timeUntilFire;
-    private int levelAPS = 1;
-    private int levelRange = 1;
+    public int levelAPS = 1;
+    public int levelRange = 1;
     private float apsBase;
     private float targetingRangeBase;
     private bool isGridConnected;
@@ -187,19 +187,19 @@ public class Turret : MonoBehaviour
         //CloseUpgradeUI();
     }
 
-    private int CalculateCost(int level)
+    public int CalculateCost(int level)
     {
         return baseUpgradeCost + (level - 1) * 50;
     }
 
     private float Calculateaps()
     {
-        return apsBase + levelAPS - 1;
+        return apsBase + (levelAPS - 1) * 0.5f;
     }
 
     private float CalculateRange()
     {
-        return targetingRangeBase + levelRange - 1;
+        return targetingRangeBase + (levelRange - 1) * 0.5f;
     }
 
     private void FreezeEnemies()
