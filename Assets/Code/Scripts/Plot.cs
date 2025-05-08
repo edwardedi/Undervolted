@@ -82,7 +82,7 @@ public class Plot : MonoBehaviour
         {
             LevelManager.main.SpendCurrency(towerToBuild.cost);
             towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
-            BuildManager.main.SetSelectedTower(3);
+            BuildManager.main.SetSelectedTower(4);
             gridObj = Instantiate(BuildManager.main.GetSelectedTower().prefab, transform.position, Quaternion.identity);
             BuildManager.main.SetSelectedTower(-1);
             return;

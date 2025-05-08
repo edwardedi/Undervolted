@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
 
     public int currency;
     public int electricity;
+    public int life;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour
     {
         currency = 1000;
         electricity = 100;
+        life = 100;
     }
 
     public void IncreaseCurrency(int amount)
@@ -70,4 +72,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public bool decreaseLife()
+    {
+        if (life > 0)
+        {
+            life--;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
     {
         if (numberOfEntryPoints == 1)
         {
-            if (Vector2.Distance(target.position, transform.position) <= 0.1f)
+            if (Vector2.Distance(target.position, transform.position) <= 0.05f)
             {
                 pathIndex++;
 
@@ -31,6 +31,7 @@ public class EnemyMovement : MonoBehaviour
                 {
                     EnemySpawner.onEnemyDestroy.Invoke();
                     Destroy(gameObject);
+                    LevelManager.main.decreaseLife();
                     return;
                 }
                 else
@@ -40,7 +41,7 @@ public class EnemyMovement : MonoBehaviour
             }
         } else if (numberOfEntryPoints == 2)
         {
-            if (Vector2.Distance(target.position, transform.position) <= 0.1f)
+            if (Vector2.Distance(target.position, transform.position) <= 0.05f)
             {
                 pathIndex += 2;
 
@@ -48,6 +49,7 @@ public class EnemyMovement : MonoBehaviour
                 {
                     EnemySpawner.onEnemyDestroy.Invoke();
                     Destroy(gameObject);
+                    LevelManager.main.decreaseLife();
                     return;
                 }
                 else
