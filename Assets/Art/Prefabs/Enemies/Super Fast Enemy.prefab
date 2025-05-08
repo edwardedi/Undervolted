@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6298622749931543121}
   - component: {fileID: -6208467350034518106}
   m_Layer: 6
-  m_Name: Enemy
+  m_Name: Super Fast Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.6075471, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.9320468, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,7 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8306776151725000201}
-  moveSpeed: 2
+  moveSpeed: 5
+  pathIndex: 0
+  numberOfEntryPoints: 1
 --- !u!114 &-6208467350034518106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,5 +182,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc339ebcf4fd12b4096fafebce1804a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 2
+  hitPoints: 1
   currencyValue: 10

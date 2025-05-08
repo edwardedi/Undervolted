@@ -12,7 +12,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int baseEnemies = 8;
     [SerializeField] private float enemiesPerSecond = 0.5f;
     [SerializeField] private float difficultyScalingFactor = 0.75f;
-    [SerializeField] private float enemiesPerSecondCap = 15f;
+    [SerializeField] private float enemiesPerSecondCap = 20f;
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
