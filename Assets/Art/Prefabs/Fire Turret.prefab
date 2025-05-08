@@ -1059,7 +1059,7 @@ MonoBehaviour:
     m_Bits: 64
   bulletPrefab: {fileID: 9050469705887070267, guid: 1a0de351b7f2821429c701b5cae677c2, type: 3}
   firingPoint: {fileID: 6831289228325641449}
-  targetingRange: 5
+  targetingRange: 3
   rotationSpeed: 200
   aps: 2
   baseUpgradeCost: 100
