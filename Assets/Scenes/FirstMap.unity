@@ -3166,6 +3166,7 @@ MonoBehaviour:
   - {fileID: 4981700671887410351, guid: 00b7afcfa2b4ca741ad223586e606ab9, type: 3}
   - {fileID: 4981700671887410351, guid: 54d738416b3624440a750ff0bdd58209, type: 3}
   - {fileID: 4981700671887410351, guid: 6972497ffa0feda4e9702b8cf9dedd67, type: 3}
+  - {fileID: 4981700671887410351, guid: 37e7674646df0434db9ad9c598f33b1c, type: 3}
   nextLevelButton: {fileID: 310113620}
   baseEnemies: 8
   enemiesPerSecond: 0.5

@@ -6,7 +6,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
     [Header("Attributes")]
-    [SerializeField] private float bulletSpeed = 5f;
+    [SerializeField] private float bulletSpeed = 6f;
     [SerializeField] private int bulletDamage = 1;
 
     public bool fireBullet = false;
@@ -31,6 +31,7 @@ public class Bullet : MonoBehaviour
         Vector2 direction = (target.position - transform.position).normalized;
 
         rb.linearVelocity = direction * bulletSpeed; //transform translate method
+        bulletSpeed += 0.1f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

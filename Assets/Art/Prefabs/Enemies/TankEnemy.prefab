@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8306776151725000201}
   moveSpeed: 1.5
+  pathIndex: 0
+  numberOfEntryPoints: 1
 --- !u!114 &-6208467350034518106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,5 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc339ebcf4fd12b4096fafebce1804a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 5
   hitPoints: 5
   currencyValue: 20
