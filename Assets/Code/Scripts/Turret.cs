@@ -173,6 +173,7 @@ public class Turret : MonoBehaviour
         LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
         levelAPS++;
         aps = Calculateaps();
+        rotationSpeed += 50;
 
         //CloseUpgradeUI();
     }
