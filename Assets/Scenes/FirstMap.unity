@@ -1580,7 +1580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 20}
+  m_AnchoredPosition: {x: 55, y: 20}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &236552540
@@ -1637,7 +1637,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -6987,7 +6987,7 @@ GameObject:
   - component: {fileID: 1130280075}
   - component: {fileID: 1130280074}
   m_Layer: 5
-  m_Name: Super Turret
+  m_Name: Sniper Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12877,7 +12877,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Super Turret
+  m_text: Sniper Turret
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12996,6 +12996,7 @@ MonoBehaviour:
   costAPSUI: {fileID: 1412966253}
   levelRangeUI: {fileID: 1870741288}
   costRangeUI: {fileID: 1805172979}
+  rangeOrDamage: {fileID: 236552540}
 --- !u!114 &2044615224
 MonoBehaviour:
   m_ObjectHideFlags: 0

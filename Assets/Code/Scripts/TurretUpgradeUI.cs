@@ -16,6 +16,7 @@ public class TurretUpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI costAPSUI;
     [SerializeField] private TextMeshProUGUI levelRangeUI;
     [SerializeField] private TextMeshProUGUI costRangeUI;
+    [SerializeField] private TextMeshProUGUI rangeOrDamage;
 
     private Turret target;
 
@@ -26,6 +27,11 @@ public class TurretUpgradeUI : MonoBehaviour
         SpecialUpgrade.onClick.RemoveListener(specialUpgrade);
 
         target = _target;
+
+        if (target.typeOfTurret == 2)
+            rangeOrDamage.text = "Upgrade Damage";
+        else
+            rangeOrDamage.text = "Upgrade Range";
 
         updateUI();
 
@@ -38,13 +44,13 @@ public class TurretUpgradeUI : MonoBehaviour
 
     private void upgradeAPS()
     {
-        target.UpgradeAPS();
+        target.UpgradeFirstPath();
         updateUI();
     }
 
     private void upgradeRange()
     {
-        target.UpgradeRange();
+        target.UpgradeSecondPath();
         updateUI();
     }
 
@@ -62,9 +68,9 @@ public class TurretUpgradeUI : MonoBehaviour
 
     private void updateUI()
     {
-        levelAPSUI.text = target.levelAPS.ToString();
-        costAPSUI.text = target.CalculateCost(target.levelAPS).ToString();
-        levelRangeUI.text = target.levelRange.ToString();
-        costRangeUI.text = target.CalculateCost(target.levelRange).ToString();
+        levelAPSUI.text = target.levelFirstPath.ToString();
+        costAPSUI.text = target.CalculateCost(target.levelFirstPath).ToString();
+        levelRangeUI.text = target.levelSecondPath.ToString();
+        costRangeUI.text = target.CalculateCost(target.levelSecondPath).ToString();
     }
 }

@@ -55,7 +55,7 @@ public class Plot : MonoBehaviour
                 if (UpgradeMenu.main != null)
                     UpgradeMenu.main.SpecialUpgradeDisappear();
                 FindFirstObjectByType<TurretUpgradeUI>().SetTarget(turret);
-                if (turret.levelAPS == 5)
+                if (turret.levelFirstPath == 5 || turret.levelSecondPath == 5)
                     UpgradeMenu.main.SpecialUpgradeAppear();
                 return;
             }

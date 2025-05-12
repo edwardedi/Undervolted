@@ -1017,7 +1017,7 @@ GameObject:
   - component: {fileID: 2942826144430101584}
   - component: {fileID: 2641865549319850629}
   m_Layer: 0
-  m_Name: Super Turret
+  m_Name: Sniper Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1059,15 +1059,14 @@ MonoBehaviour:
     m_Bits: 64
   bulletPrefab: {fileID: 9050469705887070267, guid: 5c11388a3ca467942884a12d9b966934, type: 3}
   firingPoint: {fileID: 6831289228325641449}
-  upgradeUI: {fileID: 597545838633014717}
-  upgradeAPS: {fileID: 177946393436469658}
-  upgradeRange: {fileID: 8089947235435859225}
-  targetingRange: 5
-  rotationSpeed: 200
-  aps: 2
+  targetingRange: 30
+  rotationSpeed: 100
+  aps: 0.5
   baseUpgradeCost: 100
   electricityCost: 5
   freezeTime: 0
+  levelAPS: 1
+  levelRange: 1
 --- !u!1 &7429972312642243375
 GameObject:
   m_ObjectHideFlags: 0

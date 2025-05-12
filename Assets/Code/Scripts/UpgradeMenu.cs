@@ -20,10 +20,10 @@ public class UpgradeMenu : MonoBehaviour
 
     private void OnGUI()
     {
-        levelAPSUI.text = turret.levelAPS.ToString();
-        costAPSUI.text = turret.CalculateCost(turret.levelAPS).ToString();
-        levelRangeUI.text = turret.levelRange.ToString();
-        costRangeUI.text = turret.CalculateCost(turret.levelRange).ToString();
+        levelAPSUI.text = turret.levelFirstPath.ToString();
+        costAPSUI.text = turret.CalculateCost(turret.levelFirstPath).ToString();
+        levelRangeUI.text = turret.levelSecondPath.ToString();
+        costRangeUI.text = turret.CalculateCost(turret.levelSecondPath).ToString();
     }
 
     public void SpecialUpgradeAppear()

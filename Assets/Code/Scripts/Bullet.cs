@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletSpeed = 6f;
     [SerializeField] private int bulletDamage = 1;
     [SerializeField] private int fireDamage = 1;
-    [SerializeField] private float fireTotalTime = 3.2f;
+    [SerializeField] private float fireTotalTime = 3f;
     [SerializeField] private float timeBetweenFire = 1f;
 
     public bool fireBullet = false;

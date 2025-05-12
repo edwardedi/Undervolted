@@ -20,7 +20,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         currency = 100000;
-        electricity = 5;
+        electricity = 10000;
         life = 100;
     }
 

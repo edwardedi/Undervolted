@@ -26,12 +26,12 @@ public class Turret : MonoBehaviour
 
     private Transform target;
     private float timeUntilFire;
-    public int levelAPS = 1;
-    public int levelRange = 1;
+    public int levelFirstPath = 1;
+    public int levelSecondPath = 1;
     private float apsBase;
     private float targetingRangeBase;
     private bool isGridConnected;
-    private int typeOfTurret;
+    public int typeOfTurret;
     private int damageValueChange;
     private float bulletSpeedChange;
     private int specialPathChoosen;
@@ -43,7 +43,10 @@ public class Turret : MonoBehaviour
         apsBase = aps;
         targetingRangeBase = targetingRange;
         damageValueChange = 1;
-        bulletSpeedChange = 6f;
+        if (typeOfTurret == 2)
+            bulletSpeedChange = 8f;
+        else
+            bulletSpeedChange = 6f;
         fireDamageChange = 1;
         fireTotalTimeChange = 3.2f;
 
@@ -56,7 +59,7 @@ public class Turret : MonoBehaviour
         if (isGridConnected == false) return;
         if (LevelManager.main.CheckElectricity(electricityCost) == false) return;
 
-        if (typeOfTurret == 2)
+        if (typeOfTurret == 3) //Check here if you add other turrets
         {
             timeUntilFire += Time.deltaTime;
 
@@ -131,26 +134,21 @@ public class Turret : MonoBehaviour
     {
         RaycastHit2D[] enemies = Physics2D.CircleCastAll(transform.position, targetingRange, (Vector2)transform.position, 0f, enemyMask);
 
-        //float maxDistance = float.MaxValue;
+        float maxDistance = float.MaxValue;
+        RaycastHit2D enemyTarget;
         if (enemies.Length > 0)
         {
-            /*foreach (RaycastHit2D enemy in enemies)
+            enemyTarget = enemies[0];
+            foreach (RaycastHit2D enemy in enemies)
             {
                 EnemyMovement em = enemy.transform.GetComponent<EnemyMovement>();
                 if (em.DistanceToFinish() > maxDistance)
                 {
                     maxDistance = em.DistanceToFinish();
+                    enemyTarget = enemy;
                 }
             }
-            foreach (var enemy in enemies)
-            {
-                EnemyMovement em = enemy.transform.GetComponent<EnemyMovement>();
-                if (em.DistanceToFinish() - maxDistance < 0.00001)
-                {
-                    target = enemy.transform;
-                }
-            }*/
-            target = enemies[0].transform;
+            target = enemyTarget.transform;
         }
     }
 
@@ -178,57 +176,66 @@ public class Turret : MonoBehaviour
         //UIManager.main.SetHoveringState(false);
     }
 
-    public void UpgradeAPS()
+    public void UpgradeFirstPath()
     {
-        if (CalculateCost(levelAPS) > LevelManager.main.currency) return;
+        if (CalculateCost(levelFirstPath) > LevelManager.main.currency) return;
 
-        if (levelAPS < 3)
+        if (levelFirstPath < 3)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
-            levelAPS++;
+            LevelManager.main.SpendCurrency(CalculateCost(levelFirstPath));
+            levelFirstPath++;
             aps = Calculateaps();
             rotationSpeed += 75;
         }
-        else if (levelAPS == 3 && specialPathChoosen == 0)
+        else if (levelFirstPath == 3 && specialPathChoosen == 0)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
-            levelAPS++;
+            LevelManager.main.SpendCurrency(CalculateCost(levelFirstPath));
+            levelFirstPath++;
             specialPathChoosen = 1;
             aps = Calculateaps();
             rotationSpeed += 75;
         }
-        else if (levelAPS == 4)
+        else if (levelFirstPath == 4)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
-            levelAPS++;
+            LevelManager.main.SpendCurrency(CalculateCost(levelFirstPath));
+            levelFirstPath++;
             aps = Calculateaps();
             rotationSpeed += 75;
             UpgradeMenu.main.SpecialUpgradeAppear();
         }
     }
 
-    public void UpgradeRange()
+    public void UpgradeSecondPath()
     {
-        if (CalculateCost(levelRange) > LevelManager.main.currency) return;
+        if (CalculateCost(levelSecondPath) > LevelManager.main.currency) return;
 
-        if (levelRange < 3)
+        if (levelSecondPath < 3)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
-            levelRange++;
-            targetingRange = CalculateRange();
+            LevelManager.main.SpendCurrency(CalculateCost(levelSecondPath));
+            levelSecondPath++;
+            if (typeOfTurret == 2) //For sniper change damage
+                damageValueChange++;
+            else
+                targetingRange = CalculateRange(); //For every other turret change range
         }
-        else if (levelRange == 3 && specialPathChoosen == 0)
+        else if (levelSecondPath == 3 && specialPathChoosen == 0)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
-            levelRange++;
+            LevelManager.main.SpendCurrency(CalculateCost(levelSecondPath));
+            levelSecondPath++;
             specialPathChoosen = 2;
-            targetingRange = CalculateRange();
+            if (typeOfTurret == 2) //For sniper change damage
+                damageValueChange++;
+            else
+                targetingRange = CalculateRange(); //For every other turret change range
         }
-        else if (levelRange == 4)
+        else if (levelSecondPath == 4)
         {
-            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
-            levelRange++;
-            targetingRange = CalculateRange();
+            LevelManager.main.SpendCurrency(CalculateCost(levelSecondPath));
+            levelSecondPath++;
+            if (typeOfTurret == 2) //For sniper change damage
+                damageValueChange++;
+            else
+                targetingRange = CalculateRange(); //For every other turret change range
             UpgradeMenu.main.SpecialUpgradeAppear();
         }
 
@@ -239,17 +246,24 @@ public class Turret : MonoBehaviour
         if (typeOfTurret == 0)
         {
             if (specialPathChoosen == 1)
-                damageValueChange = 2;
+                damageValueChange *= 2;
             else if (specialPathChoosen == 2)
-                bulletSpeedChange = 12f;
+                bulletSpeedChange *= 2;
 
         }
         else if (typeOfTurret == 1)
         {
             if (specialPathChoosen == 1)
-                fireDamageChange = 2;
+                fireDamageChange *= 2;
             else if (specialPathChoosen == 2)
-                fireTotalTimeChange = 9.2f;
+                fireTotalTimeChange *= 3;
+        }
+        else if (typeOfTurret == 2)
+        {
+            if (specialPathChoosen == 1)
+                aps += 1;
+            else if (specialPathChoosen == 2)
+                damageValueChange *= 2;
         }
     }
 
@@ -260,12 +274,15 @@ public class Turret : MonoBehaviour
 
     private float Calculateaps()
     {
-        return apsBase + (levelAPS - 1) * 0.5f;
+        float multiplier = 0.5f;
+        if (typeOfTurret == 2)
+            multiplier = 0.25f;
+        return apsBase + (levelFirstPath - 1) * multiplier;
     }
 
     private float CalculateRange()
     {
-        return targetingRangeBase + (levelRange - 1) * 0.5f;
+        return targetingRangeBase + (levelSecondPath - 1) * 0.5f;
     }
 
     private void FreezeEnemies()
@@ -280,7 +297,7 @@ public class Turret : MonoBehaviour
                 {
                     RaycastHit2D hit = hits[i];
                     EnemyMovement em = hit.transform.GetComponent<EnemyMovement>();
-                    em.UpdateSpeed(em.GetBaseSpeed() / (levelAPS + 1));
+                    em.UpdateSpeed(em.GetBaseSpeed() / (levelFirstPath + 1));
 
                     StartCoroutine(ResetEnemySpeed(em));
                 }

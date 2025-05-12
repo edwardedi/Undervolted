@@ -12,6 +12,7 @@ public class EnemyMovement : MonoBehaviour
     public int pathIndex = 0;
     private float baseSpeed;
     public int numberOfEntryPoints = 1;
+    private float distanceToEnd = 0;
 
     void Start()
     {
@@ -58,7 +59,7 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
-        
+        //distanceToEnd = DistanceToFinish();
     }
 
     private void FixedUpdate()
