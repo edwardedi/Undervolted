@@ -8,6 +8,9 @@ public class Bullet : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float bulletSpeed = 6f;
     [SerializeField] private int bulletDamage = 1;
+    [SerializeField] private int fireDamage = 1;
+    [SerializeField] private float fireTotalTime = 3.2f;
+    [SerializeField] private float timeBetweenFire = 1f;
 
     public bool fireBullet = false;
     private Transform target;
@@ -24,6 +27,26 @@ public class Bullet : MonoBehaviour
         target = _target;
     }
 
+    public void SetDamage(int amount)
+    {
+        bulletDamage = amount;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        bulletSpeed = speed;
+    }
+
+    public void SetFireDamage(int amount)
+    {
+        fireDamage = amount;
+    }
+
+    public void SetFireTotalTime(float time)
+    {
+        fireTotalTime = time;
+    }
+
     private void FixedUpdate()
     {
         if (!target)
@@ -38,7 +61,7 @@ public class Bullet : MonoBehaviour
     {
         if (fireBullet)
         {
-            collision.gameObject.GetComponent<Health>().ApplyFireDamage(1, 3.2f, 1);
+            collision.gameObject.GetComponent<Health>().ApplyFireDamage(fireDamage, fireTotalTime, timeBetweenFire);
         }
         else
         {

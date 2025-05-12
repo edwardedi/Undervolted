@@ -35,6 +35,7 @@ public class Health : MonoBehaviour
 
     public void ApplyFireDamage(int damagePerTick, float duration, float tickInterval)
     {
+        Debug.Log(duration);
         if (fireDamageCoroutine != null)
         {
             StopCoroutine(fireDamageCoroutine);
@@ -48,6 +49,7 @@ public class Health : MonoBehaviour
         while (elapsed < duration)
         {
             TakeDamage(damagePerTick);
+            Debug.Log(elapsed);
             yield return new WaitForSeconds(tickInterval);
             elapsed += tickInterval;
         }

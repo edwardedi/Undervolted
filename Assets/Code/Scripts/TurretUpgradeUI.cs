@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using System;
+using System.Security.Cryptography;
 
 public class TurretUpgradeUI : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class TurretUpgradeUI : MonoBehaviour
     [SerializeField] private GameObject upgradeUI;
     [SerializeField] private Button UpgradeAPS;
     [SerializeField] private Button UpgradeRange;
+    [SerializeField] private Button SpecialUpgrade;
     [SerializeField] private TextMeshProUGUI levelAPSUI;
     [SerializeField] private TextMeshProUGUI costAPSUI;
     [SerializeField] private TextMeshProUGUI levelRangeUI;
@@ -21,6 +23,7 @@ public class TurretUpgradeUI : MonoBehaviour
     {
         UpgradeAPS.onClick.RemoveListener(upgradeAPS);
         UpgradeRange.onClick.RemoveListener(upgradeRange);
+        SpecialUpgrade.onClick.RemoveListener(specialUpgrade);
 
         target = _target;
 
@@ -28,21 +31,27 @@ public class TurretUpgradeUI : MonoBehaviour
 
         UpgradeAPS.onClick.AddListener(upgradeAPS);
         UpgradeRange.onClick.AddListener(upgradeRange);
+        SpecialUpgrade.onClick.AddListener(specialUpgrade);
 
         upgradeUI.SetActive(true);
     }
 
     private void upgradeAPS()
     {
-        Debug.Log("Upgrade Speed UI");
         target.UpgradeAPS();
         updateUI();
     }
 
     private void upgradeRange()
     {
-        Debug.Log("Upgrade Range UI");
         target.UpgradeRange();
+        updateUI();
+    }
+
+    private void specialUpgrade()
+    {
+        Debug.Log("SpecialUpgrade UI");
+        target.SpecialUpgrade(target);
         updateUI();
     }
 

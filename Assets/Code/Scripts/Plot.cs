@@ -40,6 +40,8 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("Show upgrade UI");
                 turret.openUpgradeUI();
+                if (UpgradeMenu.main != null)
+                    UpgradeMenu.main.SpecialUpgradeDisappear();
                 FindFirstObjectByType<TurretUpgradeUI>().SetTarget(turret);
                 return;
             }
@@ -50,7 +52,11 @@ public class Plot : MonoBehaviour
             {
                 Debug.Log("Show upgrade UI");
                 turret.openUpgradeUI();
+                if (UpgradeMenu.main != null)
+                    UpgradeMenu.main.SpecialUpgradeDisappear();
                 FindFirstObjectByType<TurretUpgradeUI>().SetTarget(turret);
+                if (turret.levelAPS == 5)
+                    UpgradeMenu.main.SpecialUpgradeAppear();
                 return;
             }
         }
@@ -94,6 +100,6 @@ public class Plot : MonoBehaviour
         turret = towerObj.GetComponent<Turret>();
         turret.setTypeOfTurret(BuildManager.main.GetTowerNumber());
         BuildManager.main.SetSelectedTower(-1);
-        
+
     }
 }

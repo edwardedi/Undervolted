@@ -32,11 +32,20 @@ public class Turret : MonoBehaviour
     private float targetingRangeBase;
     private bool isGridConnected;
     private int typeOfTurret;
+    private int damageValueChange;
+    private float bulletSpeedChange;
+    private int specialPathChoosen;
+    private int fireDamageChange;
+    private float fireTotalTimeChange;
 
     private void Start()
     {
         apsBase = aps;
         targetingRangeBase = targetingRange;
+        damageValueChange = 1;
+        bulletSpeedChange = 6f;
+        fireDamageChange = 1;
+        fireTotalTimeChange = 3.2f;
 
         //upgradeAPS.onClick.AddListener(UpgradeAPS);
         //upgradeRange.onClick.AddListener(UpgradeRange);
@@ -112,6 +121,10 @@ public class Turret : MonoBehaviour
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
+        bulletScript.SetSpeed(bulletSpeedChange);
+        bulletScript.SetDamage(damageValueChange);
+        bulletScript.SetFireDamage(fireDamageChange);
+        bulletScript.SetFireTotalTime(fireTotalTimeChange);
     }
 
     private void FindTarget()
@@ -167,27 +180,77 @@ public class Turret : MonoBehaviour
 
     public void UpgradeAPS()
     {
-        Debug.Log("Upgrade Speed turret");
         if (CalculateCost(levelAPS) > LevelManager.main.currency) return;
 
-        LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
-        levelAPS++;
-        aps = Calculateaps();
-        rotationSpeed += 50;
-
-        //CloseUpgradeUI();
+        if (levelAPS < 3)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
+            levelAPS++;
+            aps = Calculateaps();
+            rotationSpeed += 75;
+        }
+        else if (levelAPS == 3 && specialPathChoosen == 0)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
+            levelAPS++;
+            specialPathChoosen = 1;
+            aps = Calculateaps();
+            rotationSpeed += 75;
+        }
+        else if (levelAPS == 4)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelAPS));
+            levelAPS++;
+            aps = Calculateaps();
+            rotationSpeed += 75;
+            UpgradeMenu.main.SpecialUpgradeAppear();
+        }
     }
 
     public void UpgradeRange()
     {
-        Debug.Log("Upgrade Range turret");
         if (CalculateCost(levelRange) > LevelManager.main.currency) return;
 
-        LevelManager.main.SpendCurrency(CalculateCost(levelRange));
-        levelRange++;
-        targetingRange = CalculateRange();
+        if (levelRange < 3)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
+            levelRange++;
+            targetingRange = CalculateRange();
+        }
+        else if (levelRange == 3 && specialPathChoosen == 0)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
+            levelRange++;
+            specialPathChoosen = 2;
+            targetingRange = CalculateRange();
+        }
+        else if (levelRange == 4)
+        {
+            LevelManager.main.SpendCurrency(CalculateCost(levelRange));
+            levelRange++;
+            targetingRange = CalculateRange();
+            UpgradeMenu.main.SpecialUpgradeAppear();
+        }
 
-        //CloseUpgradeUI();
+    }
+
+    internal void SpecialUpgrade(Turret turret)
+    {
+        if (typeOfTurret == 0)
+        {
+            if (specialPathChoosen == 1)
+                damageValueChange = 2;
+            else if (specialPathChoosen == 2)
+                bulletSpeedChange = 12f;
+
+        }
+        else if (typeOfTurret == 1)
+        {
+            if (specialPathChoosen == 1)
+                fireDamageChange = 2;
+            else if (specialPathChoosen == 2)
+                fireTotalTimeChange = 9.2f;
+        }
     }
 
     public int CalculateCost(int level)

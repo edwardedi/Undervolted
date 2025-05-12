@@ -8,7 +8,15 @@ public class UpgradeMenu : MonoBehaviour
     [SerializeField] TextMeshProUGUI costAPSUI;
     [SerializeField] TextMeshProUGUI levelRangeUI;
     [SerializeField] TextMeshProUGUI costRangeUI;
+    [SerializeField] GameObject specialSkill;
     [SerializeField] Turret turret;
+
+    public static UpgradeMenu main;
+
+    private void Awake()
+    {
+        main = this;
+    }
 
     private void OnGUI()
     {
@@ -16,5 +24,15 @@ public class UpgradeMenu : MonoBehaviour
         costAPSUI.text = turret.CalculateCost(turret.levelAPS).ToString();
         levelRangeUI.text = turret.levelRange.ToString();
         costRangeUI.text = turret.CalculateCost(turret.levelRange).ToString();
+    }
+
+    public void SpecialUpgradeAppear()
+    {
+        specialSkill.SetActive(true);
+    }
+
+    public void SpecialUpgradeDisappear()
+    {
+        specialSkill.SetActive(false);
     }
 }
