@@ -11,6 +11,15 @@ public class Health : MonoBehaviour
     private bool isDestroyed = false;
     private Coroutine fireDamageCoroutine;
     private Coroutine regenerateHealth;
+    public bool isRegenerating = false;
+
+    private void Start()
+    {
+        if (isRegenerating)
+        {
+            RegenerateHealth(1, 100f, 2f);
+        }
+    }
 
     public void TakeDamage(int damage)
     {
@@ -55,7 +64,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Regenerate(int health, float duration, float tickInterval)
+    public void RegenerateHealth(int health, float duration, float tickInterval)
     {
         if (regenerateHealth != null)
         {

@@ -185,3 +185,4 @@ MonoBehaviour:
   maxHealth: 5
   hitPoints: 5
   currencyValue: 20
+  isRegenerating: 1
