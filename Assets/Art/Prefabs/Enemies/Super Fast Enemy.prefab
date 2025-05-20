@@ -182,6 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc339ebcf4fd12b4096fafebce1804a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
-  hitPoints: 1
-  currencyValue: 10
+  maxHealth: 3
+  hitPoints: 3
+  currencyValue: 50
+  isRegenerating: 0

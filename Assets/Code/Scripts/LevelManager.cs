@@ -19,8 +19,8 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100000;
-        electricity = 10000;
+        currency = 350;
+        electricity = 200;
         life = 100;
     }
 

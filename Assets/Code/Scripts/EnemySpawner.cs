@@ -9,10 +9,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Button nextLevelButton;
 
     [Header("Attributes")]
-    [SerializeField] private int baseEnemies = 8;
-    [SerializeField] private float enemiesPerSecond = 0.5f;
-    [SerializeField] private float difficultyScalingFactor = 0.75f;
-    [SerializeField] private float enemiesPerSecondCap = 20f;
+    [SerializeField] private int baseEnemies;
+    [SerializeField] private float enemiesPerSecond;
+    [SerializeField] private float difficultyScalingFactor;
 
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
@@ -133,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int EnemiesPerWave()
     {
-        int result = Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
+        int result = Mathf.RoundToInt(baseEnemies + (currentWave - 1) * difficultyScalingFactor * 20);
         if (result % 2 == 1)
             return result + 1;
         return result;
@@ -141,7 +140,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float EnemiesPerSecond()
     {
-        return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap);
+        return enemiesPerSecond + currentWave * difficultyScalingFactor;
     }
 
     public bool IsLevelActive()

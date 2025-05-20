@@ -272,7 +272,7 @@ public class Turret : MonoBehaviour
 
     public int CalculateCost(int level)
     {
-        return baseUpgradeCost + (level - 1) * 50;
+        return baseUpgradeCost + (level - 1) * 100;
     }
 
     private float Calculateaps()

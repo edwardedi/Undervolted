@@ -28,7 +28,10 @@ public class Health : MonoBehaviour
         if (hitPoints <= 0 && !isDestroyed)
         {
             EnemySpawner.onEnemyDestroy.Invoke();
-            LevelManager.main.IncreaseCurrency(currencyValue);
+            if (EnemySpawner.main.GetCurrentWave() < 10)
+                LevelManager.main.IncreaseCurrency(currencyValue);
+            else
+                LevelManager.main.IncreaseCurrency(currencyValue / 2);
             isDestroyed = true;
             Destroy(gameObject);
         }
@@ -36,7 +39,7 @@ public class Health : MonoBehaviour
 
     public void Regenerate(int amount)
     {
-        if( hitPoints + amount <= maxHealth)
+        if (hitPoints + amount <= maxHealth)
         {
             hitPoints += amount;
         }
@@ -76,7 +79,7 @@ public class Health : MonoBehaviour
     private IEnumerator RegenerateHealthOverTime(int health, float duration, float tickInterval)
     {
         float elapsed = 0f;
-        while(elapsed < duration)
+        while (elapsed < duration)
         {
             Regenerate(health);
             yield return new WaitForSeconds(tickInterval);
