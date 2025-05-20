@@ -26,6 +26,11 @@ public class EnemySpawner : MonoBehaviour
     private float eps; //enemies per second
     private bool isSpawning = false;
     private int numberOfSpawnedEnemies;
+    private int typesOfEnemiesToSpawn;
+    private int enemiesPerType;
+    private int spawnedNumber = 0;
+    private int typeOfTheEnemy = 0;
+    private int numberOfEntryPoints = 1;
 
     public int GetCurrentWave()
     {
@@ -34,6 +39,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
+        if (LevelManager.main.secondStartPoint != null)
+            numberOfEntryPoints = 2;
         nextLevelButton.onClick.AddListener(StartWave);
     }
 
@@ -50,16 +57,27 @@ public class EnemySpawner : MonoBehaviour
 
         timeSinceLastSpawn += Time.deltaTime;
 
-        if(timeSinceLastSpawn >= (1f / eps) && enemiesLeftToSpawn > 0)
+        if (timeSinceLastSpawn >= (1f / eps) && enemiesLeftToSpawn > 0)
         {
-            numberOfSpawnedEnemies = SpawnEnemy();
+            if (numberOfEntryPoints == 2)
+                spawnedNumber += 2;
+            else
+                spawnedNumber += 1;
+            if (spawnedNumber > enemiesPerType)
+            {
+                typeOfTheEnemy += 1;
+                spawnedNumber = 0;
+            }
+            numberOfSpawnedEnemies = SpawnEnemy(typeOfTheEnemy);
             enemiesLeftToSpawn -= numberOfSpawnedEnemies;
             enemiesAlive += numberOfSpawnedEnemies;
             timeSinceLastSpawn = 0f;
         }
 
-        if(enemiesAlive == 0 && enemiesLeftToSpawn == 0)
+        if (enemiesAlive == 0 && enemiesLeftToSpawn == 0)
         {
+            spawnedNumber = 0;
+            typeOfTheEnemy = 0;
             EndWave();
         }
     }
@@ -74,8 +92,10 @@ public class EnemySpawner : MonoBehaviour
         if (isSpawning)
             return;
         isSpawning = true;
+        typesOfEnemiesToSpawn = GetCurrentWave() / 5 + 1;
         enemiesLeftToSpawn = EnemiesPerWave();
         eps = EnemiesPerSecond();
+        enemiesPerType = EnemiesPerWave() / typesOfEnemiesToSpawn + 1;
     }
 
     private void EndWave()
@@ -85,9 +105,9 @@ public class EnemySpawner : MonoBehaviour
         timeSinceLastSpawn = 0f;
     }
 
-    private int SpawnEnemy()
+    private int SpawnEnemy(int enemyIndex)
     {
-        int index = 5; //Random.Range(0, enemyPrefabs.Length);
+        int index = enemyIndex; //Random.Range(0, enemyPrefabs.Length);
         GameObject prefabToSpawn = enemyPrefabs[index];
         GameObject enemy1 = Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
         EnemyMovement enemyMovement1 = enemy1.GetComponent<EnemyMovement>();
@@ -96,7 +116,7 @@ public class EnemySpawner : MonoBehaviour
             enemyMovement1.pathIndex = 0;
         }
 
-        if (LevelManager.main.secondStartPoint != null)
+        if (numberOfEntryPoints == 2)
         {
             GameObject enemy2 = Instantiate(prefabToSpawn, LevelManager.main.secondStartPoint.position, Quaternion.identity);
             EnemyMovement enemyMovement2 = enemy2.GetComponent<EnemyMovement>();
@@ -121,7 +141,7 @@ public class EnemySpawner : MonoBehaviour
 
     private float EnemiesPerSecond()
     {
-        return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor),0f, enemiesPerSecondCap);
+        return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor), 0f, enemiesPerSecondCap);
     }
 
     public bool IsLevelActive()

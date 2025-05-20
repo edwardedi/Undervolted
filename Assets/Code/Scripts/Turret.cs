@@ -37,6 +37,7 @@ public class Turret : MonoBehaviour
     private int specialPathChoosen;
     private int fireDamageChange;
     private float fireTotalTimeChange;
+    private bool specialUpgradeDone = false;
 
     private void Start()
     {
@@ -243,6 +244,7 @@ public class Turret : MonoBehaviour
 
     internal void SpecialUpgrade(Turret turret)
     {
+        if (specialUpgradeDone) return;
         if (typeOfTurret == 0)
         {
             if (specialPathChoosen == 1)
@@ -265,6 +267,7 @@ public class Turret : MonoBehaviour
             else if (specialPathChoosen == 2)
                 damageValueChange *= 2;
         }
+        specialUpgradeDone = true;
     }
 
     public int CalculateCost(int level)
