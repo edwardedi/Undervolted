@@ -245,12 +245,14 @@ public class Turret : MonoBehaviour
     internal void SpecialUpgrade(Turret turret)
     {
         if (specialUpgradeDone) return;
+        if (1000 > LevelManager.main.currency) return;
+        LevelManager.main.SpendCurrency(1000);
         if (typeOfTurret == 0)
         {
             if (specialPathChoosen == 1)
                 damageValueChange *= 2;
             else if (specialPathChoosen == 2)
-                bulletSpeedChange *= 2;
+                aps += 0.5f;
 
         }
         else if (typeOfTurret == 1)
@@ -320,9 +322,9 @@ public class Turret : MonoBehaviour
         isGridConnected = isConnected;
     }
 
-    private void OnDrawGizmosSelected()
+    /*private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan;
         Handles.DrawWireDisc(transform.position, transform.forward, targetingRange);
-    }
+    }*/
 }
