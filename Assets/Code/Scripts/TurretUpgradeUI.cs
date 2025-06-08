@@ -16,6 +16,7 @@ public class TurretUpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI costAPSUI;
     [SerializeField] private TextMeshProUGUI levelRangeUI;
     [SerializeField] private TextMeshProUGUI costRangeUI;
+    [SerializeField] private TextMeshProUGUI speedOrSlow;
     [SerializeField] private TextMeshProUGUI rangeOrDamage;
 
     private Turret target;
@@ -32,6 +33,11 @@ public class TurretUpgradeUI : MonoBehaviour
             rangeOrDamage.text = "Upgrade Damage";
         else
             rangeOrDamage.text = "Upgrade Range";
+
+        if (target.typeOfTurret == 3)
+            speedOrSlow.text = "Upgrade Slowness";
+        else
+            speedOrSlow.text = "Upgrade Speed";
 
         updateUI();
 

@@ -7972,6 +7972,7 @@ MonoBehaviour:
   costAPSUI: {fileID: 753409965}
   levelRangeUI: {fileID: 150724070}
   costRangeUI: {fileID: 11307314}
+  speedOrSlow: {fileID: 2033749067}
   rangeOrDamage: {fileID: 1213039498}
 --- !u!114 &1187827080
 MonoBehaviour:
@@ -13020,8 +13021,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -600, y: 20}
-  m_SizeDelta: {x: 300, y: 50}
+  m_AnchoredPosition: {x: -670, y: 20}
+  m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033749067
 MonoBehaviour:
@@ -13077,7 +13078,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -13916,7 +13917,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8100904286181591317, guid: 6c110c8023b353c4aae5e3c5b7b04452, type: 3}
       propertyPath: m_Name
-      value: Canvas
+      value: PauseMenu with EventSystem
       objectReference: {fileID: 0}
     - target: {fileID: 8114383262133915541, guid: 6c110c8023b353c4aae5e3c5b7b04452, type: 3}
       propertyPath: m_IsActive
